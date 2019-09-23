@@ -90,12 +90,44 @@ action code {:
 
         public void escribirXML() throws javax.xml.transform.TransformerConfigurationException, javax.xml.transform.TransformerException {
             //Escribir el archivo XML         
+            prettyPrint(nodoPadre);
             xmlDocument.appendChild(nodoPadre);
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource origen = new DOMSource(xmlDocument);
             StreamResult result = new StreamResult(new File("AST.xml"));
             transformer.transform(origen, result);
+        }
+        private void prettyPrint(Element root){
+                String indent = "";
+                System.out.println(root.getTagName());
+                NodeList childNodes = root.getChildNodes();
+                for (int index=0;index < childNodes.getLength(); index++){
+                    Element child = (Element) childNodes.item(index);
+                    prettyPrint(indent, index == childNodes.getLength(), child);
+                }
+        }
+        private void prettyPrint(String indent, boolean last, Element root) {
+            System.out.print(indent);
+            if (last) {
+                System.out.print("----");
+                indent += "    ";
+            } else {
+                System.out.print("+----");
+                indent += "|   ";
+            }
+            if(root.hasAttribute("Value")){
+                System.out.println(root.getAttribute("Value")); 
+            }
+            else{
+                System.out.println(root.getTagName());
+            }
+            
+            NodeList childNodes = root.getChildNodes();
+            for (int index=0;index < childNodes.getLength(); index++){
+            Element child = (Element) childNodes.item(index);
+            prettyPrint(indent, index == childNodes.getLength(), child);
+            }
         }
 :}
 /* Non terminals */
