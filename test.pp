@@ -2,9 +2,9 @@ program test;
 var 
     a,b,c,d:integer;
     e: boolean;
-    asd: string
+    fa: string;
 
-function x2(var z:boolean;x:integer;var y:char):boolean
+function x2(var z:boolean;x:integer;var y:char):boolean;
 var 
     a:integer;
 begin

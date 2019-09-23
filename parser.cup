@@ -88,7 +88,7 @@ action code {:
             }
         }
 
-        public void escribirXML() throws javax.xml.transform.TransformerConfigurationException, javax.xml.transform.TransformerException {
+        public void writeXML() throws javax.xml.transform.TransformerConfigurationException, javax.xml.transform.TransformerException {
             //Escribir el archivo XML         
             prettyPrint(nodoPadre);
             xmlDocument.appendChild(nodoPadre);
@@ -266,7 +266,7 @@ program         ::= Program var:v PuntoComa block:b Punto
                     nodoPadre = xmlDocument.createElement("Program"); 
                     if (v != null) { nodoPadre.appendChild(v); }
                     if(b != null) { nodoPadre.appendChild(b); }
-                    escribirXML();
+                    writeXML();
                 :}
                 |   Program var:v1 ParentesisAbrir vars:vs ParentesisCerrar PuntoComa block:b Punto
                 {:
@@ -290,7 +290,7 @@ program         ::= Program var:v PuntoComa block:b Punto
                         nodoPadre.appendChild(nPadre);
                     }
                     if(b != null) { nodoPadre.appendChild(b); }
-                    escribirXML();
+                    writeXML();
                 :}
                 | error block Punto
                 | Program var:v PuntoComa block:b error

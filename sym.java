@@ -6,75 +6,81 @@
 /** CUP generated class containing symbol constants. */
 public class sym {
   /* terminals */
-  public static final int PuntoPunto = 50;
-  public static final int OperadorDiferente = 12;
-  public static final int Begin = 29;
-  public static final int PuntoComa = 52;
-  public static final int Coma = 39;
-  public static final int BracketCerrar = 38;
-  public static final int Until = 36;
-  public static final int OperadorMayor = 13;
-  public static final int OperadorDivisionSpecial = 25;
-  public static final int End = 30;
-  public static final int Repeat = 35;
-  public static final int If = 26;
-  public static final int LlaveCerrar = 44;
-  public static final int DosPuntosIgual = 41;
-  public static final int Of = 5;
-  public static final int Var = 6;
-  public static final int ParentesisCerrar = 46;
-  public static final int Else = 28;
-  public static final int Read = 3;
-  public static final int Then = 27;
-  public static final int Punto = 51;
-  public static final int OperadorOr = 18;
-  public static final int While = 34;
-  public static final int To = 32;
-  public static final int TipoInteger = 9;
-  public static final int For = 31;
+  public static final int PuntoPunto = 47;
+  public static final int OperadorDiferente = 18;
+  public static final int Begin = 5;
+  public static final int PuntoComa = 49;
+  public static final int Coma = 36;
+  public static final int BracketCerrar = 35;
+  public static final int OperadorMayor = 19;
+  public static final int OperadorDivisionSpecial = 31;
+  public static final int End = 6;
+  public static final int Until = 12;
+  public static final int Repeat = 11;
+  public static final int If = 2;
+  public static final int LlaveCerrar = 41;
+  public static final int Of = 51;
+  public static final int DosPuntosIgual = 38;
+  public static final int Var = 52;
+  public static final int ParentesisCerrar = 43;
+  public static final int Else = 4;
+  public static final int Read = 33;
+  public static final int Then = 3;
+  public static final int Punto = 48;
+  public static final int OperadorOr = 24;
+  public static final int While = 10;
+  public static final int To = 8;
+  public static final int TipoInteger = 55;
+  public static final int For = 7;
   public static final int EOF = 0;
-  public static final int DosPuntos = 40;
-  public static final int OperadorAnd = 17;
-  public static final int OperadorNot = 19;
-  public static final int Function = 49;
+  public static final int DosPuntos = 37;
+  public static final int OperadorAnd = 23;
+  public static final int OperadorNot = 25;
+  public static final int Function = 46;
   public static final int error = 1;
-  public static final int LiteralCaracter = 54;
-  public static final int ParentesisAbrir = 45;
-  public static final int OperadorResta = 21;
-  public static final int LlaveAbrir = 43;
-  public static final int Do = 33;
-  public static final int LiteralString = 56;
-  public static final int OperadorIgual = 11;
-  public static final int OperadorMod = 23;
-  public static final int TipoBoolean = 7;
-  public static final int Identificador = 42;
-  public static final int OperadorMenorIgual = 16;
-  public static final int Array = 4;
-  public static final int TipoChar = 8;
-  public static final int OperadorSuma = 20;
-  public static final int Write = 2;
-  public static final int OperadorMultiplicacion = 22;
-  public static final int Program = 47;
-  public static final int BracketAbrir = 37;
-  public static final int LiteralEntero = 53;
-  public static final int OperadorDivision = 24;
-  public static final int TipoString = 10;
-  public static final int OperadorMayorIgual = 15;
-  public static final int Procedure = 48;
-  public static final int OperadorMenor = 14;
-  public static final int LiteralBoolean = 55;
+  public static final int ParentesisAbrir = 42;
+  public static final int LiteralCaracter = 14;
+  public static final int OperadorResta = 27;
+  public static final int LlaveAbrir = 40;
+  public static final int Do = 9;
+  public static final int LiteralString = 16;
+  public static final int OperadorIgual = 17;
+  public static final int TipoBoolean = 53;
+  public static final int OperadorMod = 29;
+  public static final int Identificador = 39;
+  public static final int OperadorMenorIgual = 22;
+  public static final int TipoChar = 54;
+  public static final int Array = 50;
+  public static final int OperadorSuma = 26;
+  public static final int Write = 32;
+  public static final int OperadorMultiplicacion = 28;
+  public static final int Program = 44;
+  public static final int BracketAbrir = 34;
+  public static final int LiteralEntero = 13;
+  public static final int TipoString = 56;
+  public static final int OperadorDivision = 30;
+  public static final int OperadorMayorIgual = 21;
+  public static final int Procedure = 45;
+  public static final int OperadorMenor = 20;
+  public static final int LiteralBoolean = 15;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
-  "Write",
-  "Read",
-  "Array",
-  "Of",
-  "Var",
-  "TipoBoolean",
-  "TipoChar",
-  "TipoInteger",
-  "TipoString",
+  "If",
+  "Then",
+  "Else",
+  "Begin",
+  "End",
+  "For",
+  "To",
+  "Do",
+  "While",
+  "Repeat",
+  "Until",
+  "LiteralEntero",
+  "LiteralCaracter",
+  "LiteralBoolean",
+  "LiteralString",
   "OperadorIgual",
   "OperadorDiferente",
   "OperadorMayor",
@@ -90,17 +96,8 @@ public class sym {
   "OperadorMod",
   "OperadorDivision",
   "OperadorDivisionSpecial",
-  "If",
-  "Then",
-  "Else",
-  "Begin",
-  "End",
-  "For",
-  "To",
-  "Do",
-  "While",
-  "Repeat",
-  "Until",
+  "Write",
+  "Read",
   "BracketAbrir",
   "BracketCerrar",
   "Coma",
@@ -117,10 +114,13 @@ public class sym {
   "PuntoPunto",
   "Punto",
   "PuntoComa",
-  "LiteralEntero",
-  "LiteralCaracter",
-  "LiteralBoolean",
-  "LiteralString"
+  "Array",
+  "Of",
+  "Var",
+  "TipoBoolean",
+  "TipoChar",
+  "TipoInteger",
+  "TipoString"
   };
 }
 
