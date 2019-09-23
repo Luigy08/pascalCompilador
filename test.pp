@@ -1,14 +1,24 @@
-program ejer44;
+program test;
+var 
+    a,b,c,d:integer;
+    e: boolean;
+    asd: string
 
-var x:integer;
+function x2(var z:boolean;x:integer;var y:char):boolean
+var 
+    a:integer;
 begin
-clrscr;
-x:=0
-while x<11 do
+    a := 1;
+    if ( a = 2) then
+    begin
+        e := true;
+    end;
+    x2 := (1 >2) and (3>4);
+end;
 begin
-x:=x+1;
-writeln(x);
-end;
-end;
-readkey;
+    a := 1;
+    read(a);
+    e := x2( (1 >2) and (3>4) , 1 * 2, 'a');
 end.
+
+

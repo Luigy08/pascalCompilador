@@ -18,18 +18,18 @@ import org.w3c.dom.Node;
 
 parser code {:
         
-        @Override
+    @Override
 	public void report_error(String message, Object info) {
-            System.err.print("Syntax error: " ); 
-            expected();
-            System.err.println("pero se encontro el token \'" + ((Symbol)info).value + "\' en la Linea: " + ((Symbol)info).left + ", Columna: " + ((Symbol)info).right + ". " ); 
-        }
+        System.err.print("Syntax error: " ); 
+        expected();
+        System.err.println("                  TOKEN ENCONTRADO: \'" + ((Symbol)info).value + "\' Linea: " + ((Symbol)info).left + ", Columna: " + ((Symbol)info).right + ". " ); 
+    }
 
-        @Override
-	public void syntax_error(Symbol s){
-            System.err.print("Error Sintactico: " ); 
-            expected();
-            System.err.println("pero se encontro el token \'" + sym.terminalNames[s.sym] + "\' en la Linea: " + s.left + ", Columna: " + s.right + ". " ); 
+    @Override
+	public void syntax_error(Symbol s) {
+        System.err.print("Error Sintactico: " ); 
+        expected();
+        System.err.println("                  TOKEN ENCONTRADO: \'" + sym.terminalNames[s.sym] + "\' Linea: " + s.left + ", Columna: " + s.right + ". " ); 
 	}
 
         public void expected(){
@@ -50,11 +50,11 @@ parser code {:
                         expected_tokens += terminal_name + " , ";
                     }
             }
-            System.err.print("Se esperaba alguno de los siguientes tokens: [" + expected_tokens + "] ");
+            System.err.println("TOKENS ESPERADOS: [" + expected_tokens + "] ");
         };
 
         public void report_fatal_error(String message, Object info) {
-            throw new Error("Error Fatal Sintactico, no se pudo recuperar del problema.");
+            throw new Error("Error Fatal Sintactico.");
         }
 
         public void unrecovered_syntax_error(Symbol s) {
@@ -98,76 +98,6 @@ action code {:
             transformer.transform(origen, result);
         }
 :}
-
-
-/* Terminals (tokens returned by the scanner). */
-//Functiones
-terminal Element  Write;
-terminal Element  Read;
-
-//Tipos de datos
-terminal Element  Array;
-terminal Element  Of;
-terminal Element  Var;
-terminal String   TipoBoolean;
-terminal String   TipoChar;
-terminal String   TipoInteger;
-terminal String   TipoString;
-
-//Operadores
-terminal String   OperadorIgual;
-terminal String   OperadorDiferente;
-terminal String   OperadorMayor;
-terminal String   OperadorMenor;
-terminal String   OperadorMayorIgual;
-terminal String   OperadorMenorIgual;
-terminal String   OperadorAnd;
-terminal String   OperadorOr;
-terminal String   OperadorNot;
-terminal String   OperadorSuma;
-terminal String   OperadorResta;
-terminal String   OperadorMultiplicacion;
-terminal String   OperadorMod;
-terminal String   OperadorDivision;
-terminal String   OperadorDivisionSpecial;
-
-//Estructuras de control
-terminal Element  If;
-terminal Element  Then;
-terminal Element  Else;
-terminal Element  Begin;
-terminal Element  End;
-terminal Element  For;
-terminal Element  To;
-terminal Element  Do;
-terminal Element  While;
-terminal Element  Repeat;
-terminal Element  Until;
-
-//Otros
-terminal String   BracketAbrir;
-terminal String   BracketCerrar;
-terminal String   Coma;
-terminal String   DosPuntos;
-terminal String   DosPuntosIgual;
-terminal String   Identificador;
-terminal String   LlaveAbrir;
-terminal String   LlaveCerrar;
-terminal String   ParentesisAbrir;
-terminal String   ParentesisCerrar;
-terminal String   Program;
-terminal String   Procedure;
-terminal String   Function;
-terminal String   PuntoPunto;
-terminal String   Punto;
-terminal String   PuntoComa;
-
-/*Literales*/
-terminal String         LiteralEntero;
-terminal Character      LiteralCaracter;
-terminal String         LiteralBoolean;
-terminal String         LiteralString;
-
 /* Non terminals */
 
 nonterminal Element              expr;
@@ -187,6 +117,70 @@ nonterminal Element              vardecls;
 nonterminal Element              vardecl;
 nonterminal Element              forstmt;
 nonterminal Element              FunctionCall;
+//Estructuras de control
+terminal Element  If;
+terminal Element  Then;
+terminal Element  Else;
+terminal Element  Begin;
+terminal Element  End;
+terminal Element  For;
+terminal Element  To;
+terminal Element  Do;
+terminal Element  While;
+terminal Element  Repeat;
+terminal Element  Until;
+
+/*Literales*/
+terminal String         LiteralEntero;
+terminal Character      LiteralCaracter;
+terminal String         LiteralBoolean;
+terminal String         LiteralString;
+
+//Operadores
+terminal String   OperadorIgual;
+terminal String   OperadorDiferente;
+terminal String   OperadorMayor;
+terminal String   OperadorMenor;
+terminal String   OperadorMayorIgual;
+terminal String   OperadorMenorIgual;
+terminal String   OperadorAnd;
+terminal String   OperadorOr;
+terminal String   OperadorNot;
+terminal String   OperadorSuma;
+terminal String   OperadorResta;
+terminal String   OperadorMultiplicacion;
+terminal String   OperadorMod;
+terminal String   OperadorDivision;
+terminal String   OperadorDivisionSpecial;
+//Functiones
+terminal Element  Write;
+terminal Element  Read;
+//Otros
+terminal String   BracketAbrir;
+terminal String   BracketCerrar;
+terminal String   Coma;
+terminal String   DosPuntos;
+terminal String   DosPuntosIgual;
+terminal String   Identificador;
+terminal String   LlaveAbrir;
+terminal String   LlaveCerrar;
+terminal String   ParentesisAbrir;
+terminal String   ParentesisCerrar;
+terminal String   Program;
+terminal String   Procedure;
+terminal String   Function;
+terminal String   PuntoPunto;
+terminal String   Punto;
+terminal String   PuntoComa;
+//Tipos de datos
+terminal Element  Array;
+terminal Element  Of;
+terminal Element  Var;
+terminal String   TipoBoolean;
+terminal String   TipoChar;
+terminal String   TipoInteger;
+terminal String   TipoString;
+
 
 nonterminal Element              functionDecl;
 nonterminal Element              inlineArgs;
@@ -200,6 +194,11 @@ nonterminal String               identtype;
 nonterminal Element              arraytype;
 nonterminal Element              vars;
 nonterminal Element              var;
+
+nonterminal Element              integer;
+nonterminal Element              character;
+nonterminal Element              boolean;
+nonterminal Element              string;
 
 nonterminal Element              exprlist;
 nonterminal Element              exprLogical;
@@ -218,10 +217,6 @@ nonterminal Element              blockstmt;
 nonterminal Element              writestmt;
 nonterminal Element              readstmt;
 
-nonterminal Element              integer;
-nonterminal Element              character;
-nonterminal Element              boolean;
-nonterminal Element              string;
 
 
 /*-* Operator Precedences **/
@@ -521,7 +516,7 @@ inlineArg       ::= Var vars:vs DosPuntos identtype:t
                 :}
                 ;
 
-vardecls        ::=  /* Empty */
+vardecls        ::= 
                 |   vardecl:v PuntoComa vardecls:vs
                 {:
                     iniXML();

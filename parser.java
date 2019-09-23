@@ -588,14 +588,14 @@ public class parser extends java_cup.runtime.lr_parser {
 	public void report_error(String message, Object info) {
             System.err.print("Syntax error: " ); 
             expected();
-            System.err.println("pero se encontro el token \'" + ((Symbol)info).value + "\' en la Linea: " + ((Symbol)info).left + ", Columna: " + ((Symbol)info).right + ". " ); 
+            System.err.println("                  TOKEN ENCONTRADO: \'" + ((Symbol)info).value + "\' Linea: " + ((Symbol)info).left + ", Columna: " + ((Symbol)info).right + ". " ); 
         }
 
         @Override
 	public void syntax_error(Symbol s){
             System.err.print("Error Sintactico: " ); 
             expected();
-            System.err.println("pero se encontro el token \'" + sym.terminalNames[s.sym] + "\' en la Linea: " + s.left + ", Columna: " + s.right + ". " ); 
+            System.err.println("                 TOKEN ENCONTRADO: \'" + sym.terminalNames[s.sym] + "\' Linea: " + s.left + ", Columna: " + s.right + ". " ); 
 	}
 
         public void expected(){
@@ -616,7 +616,7 @@ public class parser extends java_cup.runtime.lr_parser {
                         expected_tokens += terminal_name + " , ";
                     }
             }
-            System.err.print("Se esperaba alguno de los siguientes tokens: [" + expected_tokens + "] ");
+            System.err.println("TOKENS ESPERADOS: | [" + expected_tokens + "] |");
         };
 
         public void report_fatal_error(String message, Object info) {
