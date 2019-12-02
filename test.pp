@@ -16,7 +16,7 @@ begin
     x2 := (1 >2) and (3>4);
 end;
 begin
-    a := 1;
+    a := 1 + b * 2;
     read(a);
     e := x2( (1 >2) and (3>4) , 1 * 2, 'a');
 end.
