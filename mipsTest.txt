@@ -1,0 +1,11 @@
+.data
+ _msg1:	.asciiz "Que horrible esta cosa"
+ _c:    .byte 'a'
+.text
+.globl main
+main:
+li $v0, 4
+la $a0, _c
+syscall
+li $v0, 10
+syscall
