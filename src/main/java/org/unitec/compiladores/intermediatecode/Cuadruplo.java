@@ -80,7 +80,7 @@ public class Cuadruplo {
     @Override
     public String toString(){
         
-        String message = "%-20s %-20s %-20s %-20s %-20s";
+        String message = "%-23s %-23s %-23s %-23s %-23s";
         return String.format(message, indice+"", operacion, arg1, arg2, resultado);
     }
     
