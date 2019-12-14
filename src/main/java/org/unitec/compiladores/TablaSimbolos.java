@@ -6,6 +6,7 @@
 package org.unitec.compiladores;
 
 import java.util.ArrayList;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -14,9 +15,7 @@ import java.util.ArrayList;
 public class TablaSimbolos {
 
     public ArrayList<Simbolo> Simbolos = new ArrayList();
-    String formatHeader = "%-20s %-60s %-15s %-15s %-15s %-15s %-15s %-18s";
-    String formatBody = "%-20s %-60s %-15s %-15s %-15s %-15s %-15s %-18s";
-
+    
     public int Add(Simbolo S) throws Exception {
         int itemIndex = this.getSymbolIndex(S);
         if(itemIndex > 0) {
@@ -85,21 +84,22 @@ public class TablaSimbolos {
     public void clear(){
         Simbolos.clear();
     }
-    
-    @Override
-    public String toString() {
+    public JTextArea printSimbolTable () {
+        JTextArea txt = new JTextArea();
+        String formatHeader = "%-20s %-70s %-15s %-15s %-15s %-15s %-15s %-18s";
+        String formatBody = "%-20s %-70s %-25s %-25s %-25s %-25s %-25s %-28s";
         String headers = String.format(
-                formatHeader,
-                "ID",
-                "TIPO",
-                "AMBITO",
-                "ES VARIABLE",
-                "ES FUNCION",
-                "ES PARAMETRO",
-                "ES REF",
-                "POSICION MEMORIA"
+            formatHeader,
+            "ID",
+            "TIPO",
+            "AMBITO",
+            "VARIABLE",
+            "FUNCION",
+            "PARAMETRO",
+            "REF",
+            "POSICION MEMORIA"
         );
-        System.out.println(headers);
+        txt.append(headers + "\n");
         for (Simbolo S: Simbolos) {
             String output = String.format(
                     formatBody,
@@ -112,9 +112,12 @@ public class TablaSimbolos {
                     String.valueOf(S.isByRef()),
                     String.valueOf(S.getPosicionMemoria())
             );
-            System.out.println(output);
+            txt.append(output + "\n");
         }
-
+        return txt;
+    }
+    @Override
+    public String toString() {
         return "";
     }
 }

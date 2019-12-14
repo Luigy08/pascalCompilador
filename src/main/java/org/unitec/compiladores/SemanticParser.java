@@ -19,6 +19,8 @@ public class SemanticParser {
 
     static String ambitoActual;
     static TablaSimbolos ts = new TablaSimbolos();
+    static QuadGenerator G;
+    static TargetGenerator finalCode;
     static int offset;
     static String tempType = "";
     static ArrayList<Element> nodosHoja = new ArrayList();
@@ -39,14 +41,10 @@ public class SemanticParser {
             System.err.println(message);
         } else {
             ts.toString();
-            System.err.println("------------------------------------------------------------------------");
-            QuadGenerator G = new QuadGenerator(ts);
+            G = new QuadGenerator(ts);
             G.recorrer(nodoPadre);
-            G.print();
-            System.err.println("------------------------------------------------------------------------");
-            TargetGenerator TG = new TargetGenerator(ts, G.getTablaCuadruplos());
-            TG.generateFinalCode();
-            TG.printTargetCode();
+            finalCode = new TargetGenerator(ts, G.getTablaCuadruplos());
+            finalCode.generateFinalCode();
         }
         return ts;
     }

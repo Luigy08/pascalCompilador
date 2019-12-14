@@ -12,6 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JTextArea;
 import org.unitec.compiladores.intermediatecode.Cuadruplo;
 
 /**
@@ -77,12 +78,14 @@ public class CodigoFinalTabla {
         text.add(arg + ":");
     }
             
-    public void print(){
+    public JTextArea printFinalCode () {
+        JTextArea txt = new JTextArea();
         for (String dataRow : data) {
             System.out.println(dataRow);
+            txt.append(dataRow + "\n");
         }
+        return txt;
     }
-
     public void generateFile(String FileName) throws IOException{
         Path file = Paths.get(FileName);
         data.addAll(data.size(), text);

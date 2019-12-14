@@ -27,6 +27,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import static org.unitec.compiladores.SemanticParser.ts;
+import org.unitec.compiladores.intermediatecode.QuadGenerator;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -60,15 +62,21 @@ public class MainGui extends javax.swing.JFrame {
         btn_choose = new javax.swing.JButton();
         tf_direction = new javax.swing.JTextField();
         btn_compile = new javax.swing.JButton();
-        btn_tree = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tree = new javax.swing.JTree();
         jScrollPane2 = new javax.swing.JScrollPane();
-        textArea = new javax.swing.JTextArea();
+        intermedio = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        codFinal = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        simbolos = new javax.swing.JTextArea();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btn_choose.setText("Choose File");
+        btn_choose.setText("Cargar");
         btn_choose.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btn_chooseMouseClicked(evt);
@@ -77,22 +85,10 @@ public class MainGui extends javax.swing.JFrame {
 
         tf_direction.setEditable(false);
 
-        btn_compile.setText("Compile");
+        btn_compile.setText("Compilar");
         btn_compile.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btn_compileMouseClicked(evt);
-            }
-        });
-
-        btn_tree.setText("Cargar arbol");
-        btn_tree.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_treeMouseClicked(evt);
-            }
-        });
-        btn_tree.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_treeActionPerformed(evt);
             }
         });
 
@@ -100,9 +96,26 @@ public class MainGui extends javax.swing.JFrame {
         tree.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
         jScrollPane1.setViewportView(tree);
 
-        textArea.setColumns(20);
-        textArea.setRows(5);
-        jScrollPane2.setViewportView(textArea);
+        intermedio.setColumns(20);
+        intermedio.setRows(5);
+        jScrollPane2.setViewportView(intermedio);
+
+        codFinal.setColumns(20);
+        codFinal.setRows(5);
+        jScrollPane3.setViewportView(codFinal);
+
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel1.setText("Codigo Intermedio");
+
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel2.setText("Codigo Final");
+
+        simbolos.setColumns(20);
+        simbolos.setRows(5);
+        jScrollPane4.setViewportView(simbolos);
+
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel3.setText("Tabla de Simbolos");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -110,38 +123,59 @@ public class MainGui extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btn_tree, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_compile, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(tf_direction)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btn_choose)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btn_compile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(tf_direction)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_choose)))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jLabel1)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(47, 47, 47))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane4)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel3)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(41, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(tf_direction)
-                    .addComponent(btn_choose, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2))
+                    .addComponent(btn_choose, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tf_direction))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_tree)
-                    .addComponent(btn_compile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(44, Short.MAX_VALUE))
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(btn_compile))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane2)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addGap(1, 1, 1)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -163,7 +197,6 @@ public class MainGui extends javax.swing.JFrame {
     private void btn_compileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_compileMouseClicked
         SemanticParser.ts.clear();
         SemanticParser.offset=0;
-        System.out.println("--------------------------------------------------------------------------------------------------------------------------");
         PascalFlexer scanner;
         Parser parser = null;
         try {
@@ -171,34 +204,26 @@ public class MainGui extends javax.swing.JFrame {
             scanner = new PascalFlexer(br);
             parser = new Parser(scanner);
             Symbol Sym = parser.parse();
-            if(Sym.sym == 0)
-                JOptionPane.showMessageDialog(this, "Se Compilo correctamente el archivo!");
-            else 
-                JOptionPane.showMessageDialog(this, "Se encontraron erroes en el archivo!");
+            SAXTreeBuilder saxTree = null;
+            DefaultMutableTreeNode top = new DefaultMutableTreeNode("root");
+            saxTree = new SAXTreeBuilder(top);
+             SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+            try {
+             SAXParser saxParser = saxParserFactory.newSAXParser();
+             saxParser.parse(new InputSource(new FileInputStream("AST.xml")), saxTree);
+            } catch (Exception ex) {
+               top.add(new DefaultMutableTreeNode(ex.getMessage()));
+            }
+            this.tree.setModel(new JTree(saxTree.getTree()).getModel());
         } catch (Exception ex) {
             System.out.println(ex);
             System.out.println("dd");
             JOptionPane.showMessageDialog(this, "Se encontraron erroes en el archivo!"); 
         }
+        this.intermedio.setText(SemanticParser.G.llenarTxt().getText());
+        this.codFinal.setText(SemanticParser.finalCode.printFinalCode().getText());
+        this.simbolos.setText(SemanticParser.ts.printSimbolTable().getText());
     }//GEN-LAST:event_btn_compileMouseClicked
-
-    private void btn_treeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_treeMouseClicked
-        SAXTreeBuilder saxTree = null;
-        DefaultMutableTreeNode top = new DefaultMutableTreeNode("AST.xml");
-        saxTree = new SAXTreeBuilder(top);
-        SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
-        try {
-            SAXParser saxParser = saxParserFactory.newSAXParser();
-            saxParser.parse(new InputSource(new FileInputStream("AST.xml")), saxTree);
-        } catch (Exception ex) {
-            top.add(new DefaultMutableTreeNode(ex.getMessage()));
-        }
-        this.tree.setModel(new JTree(saxTree.getTree()).getModel());
-    }//GEN-LAST:event_btn_treeMouseClicked
-
-    private void btn_treeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_treeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_treeActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -237,10 +262,16 @@ public class MainGui extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_choose;
     private javax.swing.JButton btn_compile;
-    private javax.swing.JButton btn_tree;
+    private javax.swing.JTextArea codFinal;
+    private javax.swing.JTextArea intermedio;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea textArea;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTextArea simbolos;
     private javax.swing.JTextField tf_direction;
     private javax.swing.JTree tree;
     // End of variables declaration//GEN-END:variables

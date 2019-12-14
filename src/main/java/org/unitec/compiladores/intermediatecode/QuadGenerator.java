@@ -6,6 +6,7 @@
 package org.unitec.compiladores.intermediatecode;
 
 import java.util.ArrayList;
+import javax.swing.JTextArea;
 import org.unitec.compiladores.Simbolo;
 import org.unitec.compiladores.TablaSimbolos;
 import org.w3c.dom.Element;
@@ -1110,10 +1111,9 @@ public class QuadGenerator {
         }
     }
 
-    public void print() {
-        Cuadruplos.print();
+    public JTextArea llenarTxt (){
+        return Cuadruplos.llenarTxt();
     }
-
     private String getTypeSize(String tipo) {
         if (tipo.equals("char") || tipo.equals("boolean")) {
             return "1";

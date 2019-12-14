@@ -7,6 +7,7 @@ package org.unitec.compiladores.targetcode;
 
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JTextArea;
 import org.unitec.compiladores.Simbolo;
 import org.unitec.compiladores.TablaSimbolos;
 import org.unitec.compiladores.intermediatecode.Cuadruplo;
@@ -20,7 +21,7 @@ public class TargetGenerator {
 
     TablaSimbolos ts = new TablaSimbolos();
     TablaCuadruplos tc = new TablaCuadruplos();
-    CodigoFinalTabla cft = new CodigoFinalTabla();
+    CodigoFinalTabla finalCodeTable = new CodigoFinalTabla();
     HashMap<Integer, String> labelControl = new HashMap();
     HashMap<String, Boolean> tempVivos = new HashMap();
     HashMap<String, String> tempEquivalente = new HashMap();
@@ -40,7 +41,7 @@ public class TargetGenerator {
         generateVariables();
         lookForLabels();
         recorrerCuadruplos();
-        cft.generateFile("MIPSFinalCode.s");
+        finalCodeTable.generateFile("MIPSFinalCode.s");
     }
 
     public void generateVariables() {
@@ -50,16 +51,16 @@ public class TargetGenerator {
                 switch (tipo) {
                     case "boolean":
                     case "integer": {
-                        cft.addIntegerDataVariable(S.getId());
+                        finalCodeTable.addIntegerDataVariable(S.getId());
                         break;
                     }
                     case "char": {
-                        cft.addCharDataVariable(S.getId());
+                        finalCodeTable.addCharDataVariable(S.getId());
                         break;
                     }
                     case "string": {
                         // T_T Esta malo
-                        cft.addIntegerDataVariable(S.getId());
+                        finalCodeTable.addIntegerDataVariable(S.getId());
                         break;
                     }
                 }
@@ -69,7 +70,7 @@ public class TargetGenerator {
                     if (list[1].equals("boolean") || list[1].equals("integer")) {
                         space *= 4;
                     }
-                    cft.addArrayDataVariable(S.getId(), space);
+                    finalCodeTable.addArrayDataVariable(S.getId(), space);
                 }
             }
         }
@@ -79,7 +80,7 @@ public class TargetGenerator {
         String ambitoActual = "";
         for (int i = 0; i < tc.getSize(); i++) {
             if (labelControl.containsKey(i)) {
-                cft.addLabel(labelControl.get(i));
+                finalCodeTable.addLabel(labelControl.get(i));
             }
             Cuadruplo C = tc.item(i);
             String op = C.getOperacion();
@@ -93,9 +94,9 @@ public class TargetGenerator {
                 }
                 case "LABEL": {
                     ambitoActual = C.getArg1();
-                    cft.addLabel(C.getArg1());
+                    finalCodeTable.addLabel(C.getArg1());
                     if (ambitoActual.equals("main")) {
-                        cft.generateMove("$fp", "$sp");
+                        finalCodeTable.generateMove("$fp", "$sp");
                     }else{
                         //funciones
                     }
@@ -110,27 +111,27 @@ public class TargetGenerator {
                         String tempArg1 = this.getTemp(arg1);
                         if (resultado.contains("$t")) {
                             String tempResultado = this.getTempClean(resultado);
-                            cft.generateMove(tempArg1, tempResultado);
+                            finalCodeTable.generateMove(tempArg1, tempResultado);
                         } else {
-                            cft.generateAssignTemp(resultado, tempArg1);
+                            finalCodeTable.generateAssignTemp(resultado, tempArg1);
                         }
                     } else if (arg1.contains("'")) {
                         //
                     } else if (arg1.matches("[0-9]+")) {
                         String temp = this.getTempDisponible(resultado);
-                        cft.generateAssignNum(arg1, temp);
+                        finalCodeTable.generateAssignNum(arg1, temp);
                     } else if (arg1.equals("true") || arg1.equals("false")) {
                         String temp = this.getTempDisponible(resultado);
                         if (arg1.equals("true")) {
-                            cft.generateAssignNum("1", temp);
+                            finalCodeTable.generateAssignNum("1", temp);
                         } else {
-                            cft.generateAssignNum("0", temp);
+                            finalCodeTable.generateAssignNum("0", temp);
                         }
                     } else if(arg1.equals("RET")){
-                        cft.generateMove("$v0", "_"+resultado);
+                        finalCodeTable.generateMove("$v0", "_"+resultado);
                     } else {
                         String temp = this.getTempDisponible(resultado);
-                        cft.generateAssignVarLoad(arg1, temp);
+                        finalCodeTable.generateAssignVarLoad(arg1, temp);
                     }
                     break;
                 }
@@ -138,23 +139,23 @@ public class TargetGenerator {
                     String tempAvailable = this.getTempDisponible(resultado);
                     String address = this.getTempClean(arg1);
                     String Arg2 = this.getTempClean(arg2);
-                    cft.generateReadArray(arg1, Arg2, address, tempAvailable);
+                    finalCodeTable.generateReadArray(arg1, Arg2, address, tempAvailable);
                     break;
                 }
                 case "[]=": {
                     String arrayAdress = this.getTempDisponible(resultado);
                     String indice = this.getTempClean(arg1);
                     String valor = this.getTempClean(arg2);
-                    cft.generateWriteArray(indice, valor, resultado, arrayAdress);
+                    finalCodeTable.generateWriteArray(indice, valor, resultado, arrayAdress);
                     break;
                 }
                 case "+": {
                     String tempAvailable = this.getTempDisponible(resultado);
                     String Arg1 = this.getTempClean(arg1);
                     String Arg2 = this.getTempClean(arg2);
-                    cft.generateAdd(Arg1, Arg2, tempAvailable);
+                    finalCodeTable.generateAdd(Arg1, Arg2, tempAvailable);
                     if (!resultado.contains("$t")) {
-                        cft.generateAssignTemp(resultado,tempAvailable);
+                        finalCodeTable.generateAssignTemp(resultado,tempAvailable);
                     }
                     break;
                 }
@@ -162,20 +163,20 @@ public class TargetGenerator {
                     String tempAvailable = this.getTempDisponible(resultado);
                     String Arg1 = this.getTempClean(arg1);
                     String Arg2 = this.getTempClean(arg2);
-                    cft.generateSub(Arg1, Arg2, tempAvailable);
+                    finalCodeTable.generateSub(Arg1, Arg2, tempAvailable);
                     break;
                 }
                 case "*": {
                     String Arg1 = this.getTempClean(arg1);
                     String Arg2 = this.getTempClean(arg2);
-                    cft.generateMult(Arg1, Arg2);
+                    finalCodeTable.generateMult(Arg1, Arg2);
                     if (resultado.contains("$t")) {
                         String ArgResultado = this.getTempDisponible(resultado);
-                        cft.generateMFLo(ArgResultado);
+                        finalCodeTable.generateMFLo(ArgResultado);
                     } else {
                         String temp = this.getTempDisponible(resultado);
-                        cft.generateMFLo(temp);
-                        cft.generateAssignTemp(resultado, temp);
+                        finalCodeTable.generateMFLo(temp);
+                        finalCodeTable.generateAssignTemp(resultado, temp);
                         this.getTempClean(resultado);
                     }
                     break;
@@ -183,65 +184,65 @@ public class TargetGenerator {
                 case "/": {
                     String Arg1 = this.getTempClean(arg1);
                     String Arg2 = this.getTempClean(arg2);
-                    cft.generateDiv(Arg1, Arg2);
+                    finalCodeTable.generateDiv(Arg1, Arg2);
                     if (resultado.contains("$t")) {
                         String ArgResultado = this.getTempDisponible(resultado);
-                        cft.generateMFLo(ArgResultado);
+                        finalCodeTable.generateMFLo(ArgResultado);
                     } else {
                         String temp = this.getTempDisponible(resultado);
-                        cft.generateMFLo(temp);
-                        cft.generateAssignTemp(resultado, temp);
+                        finalCodeTable.generateMFLo(temp);
+                        finalCodeTable.generateAssignTemp(resultado, temp);
                         this.getTempClean(resultado);
                     }
                     break;
                 }
                 case "GOTO": {
                     String label = labelControl.get(Integer.parseInt(arg1));
-                    cft.generateBranch(label);
+                    finalCodeTable.generateBranch(label);
                     break;
                 }
                 case "if>":{
                     String label = labelControl.get(Integer.parseInt(resultado));
                     String Arg1 = this.getTempClean(arg1);
                     String Arg2 = this.getTempClean(arg2);
-                    cft.generateGreaterThan(Arg1, Arg2, label);
+                    finalCodeTable.generateGreaterThan(Arg1, Arg2, label);
                     break;
                 }
                 case "if<":{
                     String label = labelControl.get(Integer.parseInt(resultado));
                     String Arg1 = this.getTempClean(arg1);
                     String Arg2 = this.getTempClean(arg2);
-                    cft.generateLessThan(Arg1, Arg2, label);
+                    finalCodeTable.generateLessThan(Arg1, Arg2, label);
                     break;
                 }
                 case "if>=":{
                     String label = labelControl.get(Integer.parseInt(resultado));
                     String Arg1 = this.getTempClean(arg1);
                     String Arg2 = this.getTempClean(arg2);
-                    cft.generateGreaterEqual(Arg1, Arg2, label);
+                    finalCodeTable.generateGreaterEqual(Arg1, Arg2, label);
                     break;
                 }
                 case "if<=":{
                     String label = labelControl.get(Integer.parseInt(resultado));
                     String Arg1 = this.getTempClean(arg1);
                     String Arg2 = this.getTempClean(arg2);
-                    cft.generateLessEqual(Arg1, Arg2, label);
+                    finalCodeTable.generateLessEqual(Arg1, Arg2, label);
                     break;
                 }
                 case "if=":{
                     String label = labelControl.get(Integer.parseInt(resultado));
                     String Arg1 = this.getTempClean(arg1);
                     String Arg2 = this.getTempClean(arg2);
-                    cft.generateEqual(Arg1, Arg2, label);
+                    finalCodeTable.generateEqual(Arg1, Arg2, label);
                     break;
                 }
                 case "CALL":{
-                    cft.generateJal(arg1);
+                    finalCodeTable.generateJal(arg1);
                     paramCount = 0;
                     break;
                 }
                 case "PARAM":{
-                    cft.generateParam(arg1,paramCount);
+                    finalCodeTable.generateParam(arg1,paramCount);
                     paramCount++;
                     break;
                 }
@@ -251,7 +252,7 @@ public class TargetGenerator {
                 cft.addLabel(label);
             }*/
         }
-        cft.generateEndOfProgram();
+        finalCodeTable.generateEndOfProgram();
 
     }
 
@@ -279,10 +280,10 @@ public class TargetGenerator {
         String param = C.getArg1();
         if (param.startsWith("$t")) {
             String temp = this.getTempClean(param);
-            cft.addWriteTemp(C, temp);
+            finalCodeTable.addWriteTemp(C, temp);
         }else if (param.contains("'")) {
-            String messageName = cft.addDataMessage(param);
-            cft.addWriteStatementLiteral(messageName);
+            String messageName = finalCodeTable.addDataMessage(param);
+            finalCodeTable.addWriteStatementLiteral(messageName);
         } else {
             Simbolo S = ts.getVariable(param, ambitoActual);
             if (S == null && !ambitoActual.equals("main")) {
@@ -290,9 +291,9 @@ public class TargetGenerator {
             }
             String tipo = S.getTipo();
             if (tipo.equals("string") || tipo.equals("char")) {
-                cft.addWriteStringStatement(param);
+                finalCodeTable.addWriteStringStatement(param);
             } else {
-                cft.addWriteStatement(param);
+                finalCodeTable.addWriteStatement(param);
             }
         }
     }
@@ -308,13 +309,13 @@ public class TargetGenerator {
         if (tipo.equals("string") || tipo.equals("char")) {
             //cft.addWriteStringStatement(variable);
         } else {
-            cft.addReadStatement(variable);
+            finalCodeTable.addReadStatement(variable);
         }
 
     }
 
-    public void printTargetCode() {
-        cft.print();
+    public JTextArea printFinalCode() {
+        return finalCodeTable.printFinalCode();
     }
 
     public String newLabel() {

@@ -6,6 +6,7 @@
 package org.unitec.compiladores.intermediatecode;
 
 import java.util.ArrayList;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -98,16 +99,17 @@ public class TablaCuadruplos {
         cuadruplos.add(new Cuadruplo(indice, "CALL", FuncName, "", ""));
         return indice;
     }
-    
-    public void print(){
-        String Headers = "%-10s %-10s %-10s %-10s %-10s";
-        System.out.println(String.format(Headers,"Cuadruplo", "Operacion", "Arg1", "Arg2", "Resultado"));
+    public JTextArea llenarTxt() {
+    JTextArea out = new JTextArea();
+        String Headers = "%-15s %-15s %-15s %-15s %-15s";
+        out.append(String.format(Headers,"Cuadruplo", "Operacion", "Arg1", "Arg2", "Resultado") + "\n");
         for (int i = 0; i < cuadruplos.size(); i++) {
             Cuadruplo C = cuadruplos.get(i);
-            System.out.println(C);
+            out.append(C + "\n");
         }
-        System.out.println("");
+        return out;
     }
+   
     
     public int getSize(){
         return this.cuadruplos.size();
