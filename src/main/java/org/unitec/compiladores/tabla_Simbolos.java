@@ -12,7 +12,7 @@ import javax.swing.JTextArea;
  *
  * @author Cesar Bonilla
  */
-public class TablaSimbolos {
+public class tabla_Simbolos {
 
     public ArrayList<Simbolo> Simbolos = new ArrayList();
     

@@ -3,12 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.unitec.compiladores.intermediatecode;
+package org.unitec.compiladores;
 
 import java.util.ArrayList;
 import javax.swing.JTextArea;
-import org.unitec.compiladores.Simbolo;
-import org.unitec.compiladores.TablaSimbolos;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
@@ -18,18 +16,18 @@ import org.w3c.dom.NodeList;
  */
 public class QuadGenerator {
 
-    TablaCuadruplos Cuadruplos = new TablaCuadruplos();
-    TablaSimbolos TS = new TablaSimbolos();
+    cuadruplos Cuadruplos = new cuadruplos();
+    tabla_Simbolos TS = new tabla_Simbolos();
     String opracionActual = "";
     String ambitoActual = "main";
     int tempCounter = 0;
     boolean debug = false;
 
-    public QuadGenerator(TablaSimbolos TS) {
+    public QuadGenerator(tabla_Simbolos TS) {
         this.TS = TS;
     }
 
-    public TablaCuadruplos getTablaCuadruplos() {
+    public cuadruplos getTablaCuadruplos() {
         return this.Cuadruplos;
     }
 

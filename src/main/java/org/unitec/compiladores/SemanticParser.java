@@ -6,8 +6,6 @@
 package org.unitec.compiladores;
 
 import java.util.ArrayList;
-import org.unitec.compiladores.intermediatecode.QuadGenerator;
-import org.unitec.compiladores.targetcode.TargetGenerator;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
@@ -18,9 +16,9 @@ import org.w3c.dom.NodeList;
 public class SemanticParser {
 
     static String ambitoActual;
-    static TablaSimbolos ts = new TablaSimbolos();
+    static tabla_Simbolos ts = new tabla_Simbolos();
     static QuadGenerator G;
-    static TargetGenerator finalCode;
+    static final_code_writer finalCode;
     static int offset;
     static String tempType = "";
     static ArrayList<Element> nodosHoja = new ArrayList();
@@ -30,12 +28,11 @@ public class SemanticParser {
     static boolean inAFunction = false;
     static boolean debug = false;
 
-    public static TablaSimbolos llenarTablaSimbolos(Element nodoPadre) throws Exception {
+    public static tabla_Simbolos llenarTablaSimbolos(Element nodoPadre) throws Exception {
         ambitoActual = "main";
         numErrores = 0;
         recorrerArbol(nodoPadre, "0", "0");
         if (numErrores > 0) {
-            System.err.println("------------------------------------------------------------------------");
             String message = "Se encontraron %d error(es), abortando compilación. \n";
             message = String.format(message, numErrores);
             System.err.println(message);
@@ -43,7 +40,7 @@ public class SemanticParser {
             ts.toString();
             G = new QuadGenerator(ts);
             G.recorrer(nodoPadre);
-            finalCode = new TargetGenerator(ts, G.getTablaCuadruplos());
+            finalCode = new final_code_writer(ts, G.getTablaCuadruplos());
             finalCode.generateFinalCode();
         }
         return ts;

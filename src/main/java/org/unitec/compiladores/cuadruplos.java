@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.unitec.compiladores.intermediatecode;
+package org.unitec.compiladores;
 
 import java.util.ArrayList;
 import javax.swing.JTextArea;
@@ -12,7 +12,7 @@ import javax.swing.JTextArea;
  *
  * @author Cesar Bonilla
  */
-public class TablaCuadruplos {    
+public class cuadruplos {    
     ArrayList<Cuadruplo> cuadruplos = new ArrayList<>();
     
     /**

@@ -3,32 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.unitec.compiladores.targetcode;
+package org.unitec.compiladores;
 
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JTextArea;
-import org.unitec.compiladores.Simbolo;
-import org.unitec.compiladores.TablaSimbolos;
-import org.unitec.compiladores.intermediatecode.Cuadruplo;
-import org.unitec.compiladores.intermediatecode.TablaCuadruplos;
 
 /**
  *
  * @author Luis Lainez
  */
-public class TargetGenerator {
+public class final_code_writer {
 
-    TablaSimbolos ts = new TablaSimbolos();
-    TablaCuadruplos tc = new TablaCuadruplos();
-    CodigoFinalTabla finalCodeTable = new CodigoFinalTabla();
+    tabla_Simbolos ts = new tabla_Simbolos();
+    cuadruplos tc = new cuadruplos();
+    sentencias_codigo_final finalCodeTable = new sentencias_codigo_final();
     HashMap<Integer, String> labelControl = new HashMap();
     HashMap<String, Boolean> tempVivos = new HashMap();
     HashMap<String, String> tempEquivalente = new HashMap();
     int labelCount = 0;
     int paramCount = 0;
 
-    public TargetGenerator(TablaSimbolos TS, TablaCuadruplos TC) throws Exception {
+    public final_code_writer(tabla_Simbolos TS, cuadruplos TC) throws Exception {
         ts = TS;
         tc = TC;
         for (int i = 0; i <= 9; i++) {

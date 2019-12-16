@@ -5,37 +5,19 @@
  */
 package org.unitec.compiladores;
 
-import java.awt.BorderLayout;
-import java.awt.event.WindowAdapter;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
-import java.io.IOException;
 import java_cup.runtime.Symbol;
-import java_cup.runtime.XMLElement;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-import static org.unitec.compiladores.SemanticParser.ts;
-import org.unitec.compiladores.intermediatecode.QuadGenerator;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
 import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 /**
  *
@@ -276,5 +258,5 @@ public class MainGui extends javax.swing.JFrame {
     private javax.swing.JTextField tf_direction;
     private javax.swing.JTree tree;
     // End of variables declaration//GEN-END:variables
-    public TablaSimbolos ts = new TablaSimbolos();
+    public tabla_Simbolos ts = new tabla_Simbolos();
 }

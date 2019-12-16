@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.unitec.compiladores.targetcode;
+package org.unitec.compiladores;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -13,18 +13,17 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTextArea;
-import org.unitec.compiladores.intermediatecode.Cuadruplo;
 
 /**
  *
  * @author Luis Lainez
  */
-public class CodigoFinalTabla {
+public class sentencias_codigo_final {
     List<String> data = new ArrayList();
     List<String> text = new ArrayList();
     ArrayList<Integer> pila = new ArrayList();
     
-    public CodigoFinalTabla(){
+    public sentencias_codigo_final(){
         data.add(".data");
         text.add(".text");
         text.add(".globl main");
@@ -81,7 +80,6 @@ public class CodigoFinalTabla {
     public JTextArea printFinalCode () {
         JTextArea txt = new JTextArea();
         for (String dataRow : data) {
-            System.out.println(dataRow);
             txt.append(dataRow + "\n");
         }
         return txt;

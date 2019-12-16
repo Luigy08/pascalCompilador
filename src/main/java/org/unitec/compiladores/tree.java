@@ -20,11 +20,11 @@ import javax.xml.parsers.SAXParserFactory;
  *
  * @author elco45
  */
-public class XMLTreeView {
+public class tree {
 
     private SAXTreeBuilder saxTree = null;
 
-    public XMLTreeView(JFrame frame, String file) {
+    public tree(JFrame frame, String file) {
         frame.getContentPane().setLayout(new BorderLayout());
         DefaultMutableTreeNode top = new DefaultMutableTreeNode(file);
 
