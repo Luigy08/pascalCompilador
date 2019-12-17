@@ -7,7 +7,6 @@ package org.unitec.compiladores;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.io.*;
 import javax.swing.tree.*;
 import org.xml.sax.*;
@@ -18,7 +17,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 /**
  *
- * @author elco45
+ * @author Michelle
  */
 public class tree {
 

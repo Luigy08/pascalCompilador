@@ -7,7 +7,7 @@ package org.unitec.compiladores;
 
 /**
  *
- * @author Cesar Bonilla
+ * @author Luis Lainez
  */
 public class Cuadruplo {
     int indice = -1;

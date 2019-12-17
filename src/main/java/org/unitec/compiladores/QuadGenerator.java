@@ -12,7 +12,7 @@ import org.w3c.dom.NodeList;
 
 /**
  *
- * @author Cesar Bonilla
+ * @author Luis Lainez
  */
 public class QuadGenerator {
 

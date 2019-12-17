@@ -10,7 +10,7 @@ import javax.swing.JTextArea;
 
 /**
  *
- * @author Cesar Bonilla
+ * @author Luis Laienz
  */
 public class cuadruplos {    
     ArrayList<Cuadruplo> cuadruplos = new ArrayList<>();

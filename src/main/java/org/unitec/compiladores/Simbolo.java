@@ -7,7 +7,7 @@ package org.unitec.compiladores;
 
 /**
  *
- * @author Cesar Bonilla
+ * @author Luis Lainez
  */
 public class Simbolo {
     private String id;
